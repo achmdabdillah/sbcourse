@@ -1,28 +1,25 @@
 package com.abdillah;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.abdillah.domain.Author;
+import com.abdillah.domain.Book;
 import com.abdillah.dto.BookDetailDto;
 import com.abdillah.service.BookService;
 
 public class App {
     public static void main(String[] args) {
-        // Author author = new Author();
+        // ApplicationContext appCtx = new
+        // ClassPathXmlApplicationContext("application-context.xml");
+        ApplicationContext appCtx = new FileSystemXmlApplicationContext(
+                "C:/Users/achmd/OneDrive/Desktop/course/spring/sbcourse/src/main/resources/application-context.xml");
 
-        ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("application-context.xml");
+        BookService bs = (BookService) appCtx.getBean("bookService");
 
-        // Author author = (Author) appContext.getBean("author");
+        BookDetailDto dto = bs.findBookDetailById(1L);
 
-        // System.out.println("author name :" + author.getName());
-        // System.out.println("author id :" + author.getId());
-
-        BookService bookService = (BookService) appContext.getBean("bookService");
-        BookDetailDto bookDetailDto = bookService.findBookDetailById(2L);
-        System.out.println("bookDetailDto" + bookDetailDto.toString());
-
-        // Author author = (Author) appContext.getBean("author");
-        // System.out.println(author.toString());
-
+        System.out.println("Book detail = " + dto);
     }
 }
